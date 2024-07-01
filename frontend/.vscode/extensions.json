@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "microsoft.eslint",
+        "esbenp.prettier-vscode",
+        "rvest.vs-code-prettier-eslint",
+        "bradlc.vscode-tailwindcss",
+        "streetsidesoftware.code-spell-checker",
+        "ms-azuretools.vscode-docker",
+        "aaron-bond.better-comments"
+    ]
+}
