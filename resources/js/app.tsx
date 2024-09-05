@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-// import AllRoutes from './routes';
+import AppRoutes from '@/routes';
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
 	<React.StrictMode>
-        <>hello</>
+        <AppRoutes />
     </React.StrictMode>
 )

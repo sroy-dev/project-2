@@ -21,10 +21,10 @@
 		"noFallthroughCasesInSwitch": true,
 
 		/* absolute paths */
-		// "baseUrl": "./src",
-		// "paths": {
-		// 	"@/*": ["*"]
-		// }
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["resources/js/*"]
+		}
 	},
 	"include": ["resources/js/**/*"],
     "exclude": ["node_modules", "dist"]
