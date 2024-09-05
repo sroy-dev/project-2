@@ -13,13 +13,13 @@ const router = createBrowserRouter([
             {
                 path: "/about",
                 element: <h1>About</h1>,
-            }
-        ]
-    }
+            },
+        ],
+    },
 ]);
 
-const AppRoutes:FC = () => {
+const AppRoutes: FC = () => {
     return <RouterProvider router={router} />;
-}
+};
 
 export default AppRoutes;
