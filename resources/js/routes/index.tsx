@@ -1,25 +1,19 @@
-import AppLayout from "@/components/layout";
-import { FC } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import BaseApp from '@/modules/app/components/BaseApp'
+import { FC } from 'react'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import appRoutes from './AppRoutes'
+import authRoutes from './AuthRoutes'
+import errorRoutes from './ErrorRoutes'
 
 const router = createBrowserRouter([
     {
-        element: <AppLayout />,
-        children: [
-            {
-                path: "/",
-                element: <h1>Hello, world!</h1>,
-            },
-            {
-                path: "/about",
-                element: <h1>About</h1>,
-            },
-        ],
+        element: <BaseApp />,
+        children: [...authRoutes, ...appRoutes, ...errorRoutes],
     },
-]);
+])
 
-const AppRoutes: FC = () => {
-    return <RouterProvider router={router} />;
-};
+const Routes: FC = () => {
+    return <RouterProvider router={router} />
+}
 
-export default AppRoutes;
+export default Routes
