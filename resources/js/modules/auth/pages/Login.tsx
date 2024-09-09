@@ -8,12 +8,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { object, string } from 'yup'
 
 const initialValues = {
-    phone: '',
+    email: '',
     password: '',
 }
 
 const validationSchema = object().shape({
-    phone: string().email().required().label('Email'),
+    email: string().email().required().label('Email'),
     password: string().required().label('Password'),
 })
 
@@ -48,7 +48,7 @@ const Login: FC = () => {
                 <Form>
                     <TextInput
                         label='Email'
-                        name='phone'
+                        name='email'
                         placeholder='Enter your email'
                         autoComplete='username'
                     />
