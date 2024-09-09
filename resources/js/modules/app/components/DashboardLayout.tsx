@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
+import SideBar from './side-bar'
 
 const DashboardLayout: FC = () => {
     return (
-        <div className='text-[14px] min-h-screen bg-white pl-[260px] pt-[60px]   flex flex-col'>
-            {/* <SideBar />
-            <TopBar /> */}
+        <div className='text-[14px] min-h-screen bg-[#181B1E] pl-[260px] pt-[60px]  flex flex-col'>
+            <SideBar />
+            {/* <TopBar /> */}
             <div className=' grow p-5'>
                 <Outlet />
             </div>
