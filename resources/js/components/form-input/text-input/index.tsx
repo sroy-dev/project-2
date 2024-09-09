@@ -1,5 +1,5 @@
-import {useField} from 'formik'
-import {CSSProperties, ChangeEvent, FC, InputHTMLAttributes, ReactNode} from 'react'
+import { useField } from 'formik'
+import { CSSProperties, ChangeEvent, FC, InputHTMLAttributes, ReactNode } from 'react'
 import Error from '../Error'
 import Label from '../Label'
 
@@ -21,7 +21,7 @@ const TextInput: FC<Props> = ({
     label,
     showOptionalLabel = false,
     className = '',
-    size = 'sm',
+    size = 'md',
     containerStyle,
     labelStyle,
     validationError,
@@ -40,7 +40,7 @@ const TextInput: FC<Props> = ({
     const [field, meta, helpers] = useField(name || '')
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        field.onChange({target: {name, value: e.target.value}})
+        field.onChange({ target: { name, value: e.target.value } })
         onChange && onChange(e)
     }
 
@@ -52,7 +52,9 @@ const TextInput: FC<Props> = ({
             <Label label={label} labelStyle={labelStyle} isOptional={showOptionalLabel} />
             <input
                 className={` leading-[1.5] w-full block outline-none  ${
-                    noBorder ? '' : 'border border-gray-300  focus:border-primary'
+                    noBorder
+                        ? ''
+                        : 'border border-gray-300  focus:border-primary placeholder:text-gray-500'
                 }  placeholder:text-gray-300 ${sizeClass} ${className}`}
                 onChange={handleChange}
                 name={name}

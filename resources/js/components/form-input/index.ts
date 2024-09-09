@@ -1,5 +1,3 @@
-export {default as FileInput} from './file-input'
-export {default as SelectInput} from './select-input'
-export {default as TextArea} from './text-area'
-export {default as TextEditor} from './text-editor'
-export {default as TextInput} from './text-input'
+export { default as SelectInput } from './select-input'
+export { default as TextArea } from './text-area'
+export { default as TextInput } from './text-input'

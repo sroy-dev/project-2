@@ -1,0 +1,29 @@
+// @import 'primereact/resources/themes/saga-green/theme.css';
+
+:root {
+    --maskbg: rgba(63, 62, 62, 0.45);
+}
+.p-datatable .p-datatable-tbody > tr {
+    background-color: transparent;
+}
+.p-tooltip-top .p-tooltip-arrow {
+    border-width: 5px 5px 0;
+    border-top-color: #334155;
+}
+.p-tooltip-bottom .p-tooltip-arrow {
+    border-width: 0 5px 5px;
+    border-bottom-color: colo;
+}
+.p-tooltip-left .p-tooltip-arrow {
+    border-width: 5px 0 5px 5px;
+    border-left-color: #334155;
+}
+.p-tooltip-right .p-tooltip-arrow {
+    border-width: 5px 5px 5px 0;
+    border-right-color: #334155;
+}
+
+.p-dropdown-trigger-icon {
+    height: 12px;
+    color: #7b7e92;
+}

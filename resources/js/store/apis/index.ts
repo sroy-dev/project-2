@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // import {removeToken, removeUser} from '../slices/authSlice'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: '',
+    baseUrl: '/api',
     prepareHeaders: async (headers) => {
         const accessToken = localStorage.getItem(AuthEnum.LOCAL_STORAGE_TOKEN_KEY)
         if (accessToken) {
