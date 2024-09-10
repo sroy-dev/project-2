@@ -1,30 +1,36 @@
 import { Button } from '@/components/button'
 import { TextInput } from '@/components/form-input'
 import { AppRoutesEnum, AuthRoutesEnum } from '@/enums/routeEnums'
-import { useLoginMutation } from '@/store/apis/authApi'
+import { useRegisterMutation } from '@/store/apis/authApi'
 import { Form, Formik, FormikProps } from 'formik'
 import { FC, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { object, string } from 'yup'
+import { object, ref, string } from 'yup'
 
 const initialValues = {
+    name: '',
     email: '',
     password: '',
+    repeat_password: '',
+    team_name: '',
 }
 
 const validationSchema = object().shape({
+    name: string().required().label('Name'),
     email: string().email().required().label('Email'),
     password: string().required().label('Password'),
+    repeat_password: string().oneOf([ref('password'), ''], 'Passwords must match'),
+    team_name: string().required().label('Team Name'),
 })
 
-const Login: FC = () => {
+const Register: FC = () => {
     const formikRef = useRef<FormikProps<any>>(null)
     const navigate = useNavigate()
 
-    const [login, { isLoading }] = useLoginMutation()
+    const [register, { isLoading }] = useRegisterMutation()
 
     const handleSubmit = async (values: any) => {
-        login(values)
+        register(values)
             .unwrap()
             .then(() => {
                 navigate(AppRoutesEnum.DASHBOARD)
@@ -35,17 +41,18 @@ const Login: FC = () => {
                 }
             })
     }
+
     return (
         <div>
-            <h1 className='text-4xl font-bold mb-5 text-center'>Sign In to Team Sync</h1>
-
+            <h1 className='text-4xl font-bold mb-5 text-center'>Create an Account</h1>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                innerRef={formikRef}
                 onSubmit={handleSubmit}
+                innerRef={formikRef}
             >
                 <Form>
+                    <TextInput label='Name' name='name' placeholder='Enter your name' />
                     <TextInput
                         label='Email'
                         name='email'
@@ -57,27 +64,33 @@ const Login: FC = () => {
                         name='password'
                         type='password'
                         placeholder='Enter your password'
-                        autoComplete='current-password'
+                        autoComplete='new-password'
                     />
-                    <div className='mb-3 text-right'>
-                        <Link className='underline text-black' to={AuthRoutesEnum.FORGOT_PASSWORD}>
-                            Forgot Password?
-                        </Link>
-                    </div>
-                    <Button className='w-full' variant='primary' type='submit' loading={isLoading}>
-                        Login
+                    <TextInput
+                        label='Repeat Password'
+                        name='repeat_password'
+                        type='password'
+                        placeholder='Repeat your password'
+                        autoComplete='new-password'
+                    />
+                    <TextInput
+                        label='Team Name'
+                        name='team_name'
+                        placeholder='Enter your team name'
+                    />
+                    <Button type='submit' loading={isLoading} className='w-full'>
+                        Register
                     </Button>
                 </Form>
             </Formik>
-
             <div className='text-center mt-4'>
-                Don't have an account?{' '}
-                <Link className='underline text-black' to={AuthRoutesEnum.REGISTER}>
-                    Register
+                Already have an account?{' '}
+                <Link to={AuthRoutesEnum.LOGIN} className='underline text-black'>
+                    Sign In
                 </Link>
             </div>
         </div>
     )
 }
 
-export default Login
+export default Register

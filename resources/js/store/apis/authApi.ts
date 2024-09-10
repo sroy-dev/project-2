@@ -3,7 +3,7 @@ import { setToken, setUser } from '../slices/authSlice'
 
 const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoints({
     endpoints: (builder) => ({
-        adminLogin: builder.mutation({
+        login: builder.mutation({
             query: (credentials) => ({
                 url: '/auth/login',
                 method: 'POST',
@@ -13,14 +13,26 @@ const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoi
             onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
                 try {
                     queryFulfilled.then(({ data }) => {
-                        dispatch(
-                            setUser({
-                                id: data.data.id,
-                                phone: data.data.phone,
-                                name: data.data.name,
-                            })
-                        )
-                        dispatch(setToken(data.data.accessToken))
+                        dispatch(setUser(data.data.user))
+                        dispatch(setToken(data.data.token))
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
+        register: builder.mutation({
+            query: (credentials) => ({
+                url: '/auth/register',
+                method: 'POST',
+                body: credentials,
+            }),
+            invalidatesTags: ['Auth'],
+            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+                try {
+                    queryFulfilled.then(({ data }) => {
+                        dispatch(setUser(data.data.user))
+                        dispatch(setToken(data.data.token))
                     })
                 } catch (error) {
                     console.log(error)
@@ -37,4 +49,4 @@ const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoi
     }),
 })
 
-export const { useAdminLoginMutation, useLogoutMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authApi

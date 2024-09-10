@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
@@ -54,5 +56,39 @@ class AuthController extends Controller
         }
 
         return response()->error('Invalid credentials', 401);
+    }
+
+
+    public function register(Request $request)
+    {
+        $credentials = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'repeat_password' => 'required',
+            'team_name' => 'required',
+        ]);
+
+        $user = User::create([
+            'name' => $credentials['name'],
+            'email' => $credentials['email'],
+            'password' => bcrypt($credentials['password']),
+            'user_type' => 'owner'
+        ]);
+
+        $team = Team::create([
+            'name' => $credentials['team_name'],
+            'user_id' => $user->id
+        ]);
+
+        $user->update(['team_id' => $team->id]);
+
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->success([
+            'token' => $token,
+            'user' => $user
+        ]);
     }
 }
