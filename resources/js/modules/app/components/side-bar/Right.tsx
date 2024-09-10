@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { GoGear, GoPencil, GoPlusCircle } from 'react-icons/go'
+import { useNavigate } from 'react-router-dom'
 
 const channels = ['General', 'Random', 'Development', 'Design', 'Marketing']
 const members = [
@@ -13,6 +14,15 @@ const members = [
 ]
 
 const RightBar: FC = () => {
+    const navigate = useNavigate()
+
+    const handleChannelClick = (channelId: string) => {
+        navigate(`/channel/${channelId}`)
+    }
+    const handleDirectMessageClick = (userId: string) => {
+        navigate(`/direct/${userId}`)
+    }
+
     return (
         <div className='grow'>
             <div className='flex gap-2 justify-between px-4 py-4'>
@@ -49,6 +59,7 @@ const RightBar: FC = () => {
                         <div
                             key={i}
                             className='flex justify-between px-4 py-2 hover:bg-slate-700/10 text-slate-400 cursor-pointer'
+                            onClick={() => handleChannelClick(channel)}
                         >
                             <div className='text-sm'># {channel}</div>
                             {/* <div className='text-xs text-slate-400'>(10)</div> */}
@@ -69,6 +80,7 @@ const RightBar: FC = () => {
                         <div
                             key={i}
                             className='flex justify-between px-4 py-2 hover:bg-slate-700/10 text-slate-400 cursor-pointer'
+                            onClick={() => handleDirectMessageClick(member)}
                         >
                             <div className='flex gap-2 items-center'>
                                 <div className='w-[30px] h-[30px] rounded-full bg-white/30 flex items-center justify-center'>

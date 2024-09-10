@@ -6,6 +6,8 @@ export enum AuthRoutesEnum {
 
 export enum AppRoutesEnum {
     DASHBOARD = '/',
+    CHANNEL_MESSAGES = '/channel/:channelId',
+    DIRECT_MESSAGES = '/direct/:userId',
     PROFILE = '/profile',
 }
 

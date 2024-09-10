@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('team_id')->nullable(); // team_id with foreign key constraint
+            $table->enum('user_type', ['owner', 'member'])->default('member'); // user_type to distinguish owner/member
             $table->rememberToken();
             $table->timestamps();
         });
