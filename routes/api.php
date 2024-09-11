@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Middleware\ForcefullyChangeAcceptHeader;
 
 
 Route::group([
@@ -17,7 +18,7 @@ Route::group([
     'middleware' => 'auth:sanctum',
     'prefix' => 'auth',
 ], function () {
-    // Route::post('logout', [LoginController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout']);
     // Route::get('me', [LoginController::class, 'me']);
     // Route::post('refresh', [LoginController::class, 'refresh']);
 });
@@ -31,3 +32,4 @@ Route::group([
     // ROute::get('{connection_id}/messages', [ConnectionController::class, 'messages']);
     // Route::post('{connection_id}/messages', [ConnectionController::class, 'sendMessage']);
 });
+

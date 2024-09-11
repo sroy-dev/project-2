@@ -1,3 +1,4 @@
+import { Response } from '@/types/response'
 import { baseApi } from '.'
 import { setToken, setUser } from '../slices/authSlice'
 
@@ -39,12 +40,22 @@ const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoi
                 }
             },
         }),
-        logout: builder.mutation({
+        logout: builder.mutation<Response<null>, void>({
             query: () => ({
                 url: '/auth/logout',
                 method: 'POST',
             }),
             invalidatesTags: ['Auth'],
+            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+                try {
+                    queryFulfilled.then(() => {
+                        dispatch(setUser(null))
+                        dispatch(setToken(null))
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            },
         }),
     }),
 })

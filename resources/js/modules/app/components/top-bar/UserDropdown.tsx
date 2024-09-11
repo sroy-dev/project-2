@@ -1,17 +1,17 @@
-import {Button} from '@/components/button'
-import {Dropdown} from '@/components/dropdown'
-import {AppRoutesEnum} from '@/enums/routeEnums'
-import {removeToken, removeUser} from '@/store/slices/authSlice'
-import {FC} from 'react'
-import {BiLogOut, BiUser} from 'react-icons/bi'
-import {useDispatch} from 'react-redux'
-import {Link} from 'react-router-dom'
+import { Button } from '@/components/button'
+import { Dropdown } from '@/components/dropdown'
+import { AppRoutesEnum } from '@/enums/routeEnums'
+import { removeToken, removeUser } from '@/store/slices/authSlice'
+import { FC } from 'react'
+import { BiLogOut, BiUser } from 'react-icons/bi'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 interface UserDropdownProps {
     className?: string
 }
 
-const UserDropdown: FC<UserDropdownProps> = ({className}) => {
+const UserDropdown: FC<UserDropdownProps> = ({ className }) => {
     const dispatch = useDispatch()
 
     const handleLogout = () => {

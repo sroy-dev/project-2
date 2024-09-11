@@ -3,6 +3,7 @@ export enum AuthRoutesEnum {
     REGISTER = '/auth/register',
     FORGOT_PASSWORD = '/auth/forgot-password',
     RESET_PASSWORD = '/auth/reset-password',
+    LOGOUT = '/auth/logout',
 }
 
 export enum AppRoutesEnum {

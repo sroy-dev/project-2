@@ -28,8 +28,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        // $this->middleware('guest')->except('logout');
+        // $this->middleware('auth')->only('logout');
     }
 
 
@@ -90,5 +90,13 @@ class AuthController extends Controller
             'token' => $token,
             'user' => $user
         ]);
+    }
+
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->success('Logged out successfully');
     }
 }

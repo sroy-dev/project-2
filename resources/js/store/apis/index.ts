@@ -9,6 +9,7 @@ const baseQuery = fetchBaseQuery({
         if (accessToken) {
             headers.set('Authorization', `Bearer ${accessToken}`)
         }
+        headers.set('Accept', 'application/json')
         return headers
     },
 })
