@@ -60,7 +60,7 @@ const Login: FC = () => {
                         autoComplete='current-password'
                     />
                     <div className='mb-3 text-right'>
-                        <Link className='underline text-black' to={AuthRoutesEnum.FORGOT_PASSWORD}>
+                        <Link className='underline' to={AuthRoutesEnum.FORGOT_PASSWORD}>
                             Forgot Password?
                         </Link>
                     </div>
@@ -72,7 +72,7 @@ const Login: FC = () => {
 
             <div className='text-center mt-4'>
                 Don't have an account?{' '}
-                <Link className='underline text-black' to={AuthRoutesEnum.REGISTER}>
+                <Link className='underline' to={AuthRoutesEnum.REGISTER}>
                     Register
                 </Link>
             </div>

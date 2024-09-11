@@ -54,7 +54,7 @@ const TextInput: FC<Props> = ({
                 className={` leading-[1.5] w-full block outline-none  ${
                     noBorder
                         ? ''
-                        : 'border border-slate-700/50  focus:border-primary placeholder:text-gray-500 bg-transparent'
+                        : 'border border-slate-600/50  focus:border-primary placeholder:text-gray-500 bg-transparent'
                 }  placeholder:text-gray-300 ${sizeClass} ${className}`}
                 onChange={handleChange}
                 name={name}

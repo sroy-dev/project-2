@@ -85,7 +85,7 @@ const Register: FC = () => {
             </Formik>
             <div className='text-center mt-4'>
                 Already have an account?{' '}
-                <Link to={AuthRoutesEnum.LOGIN} className='underline text-black'>
+                <Link to={AuthRoutesEnum.LOGIN} className='underline '>
                     Sign In
                 </Link>
             </div>
