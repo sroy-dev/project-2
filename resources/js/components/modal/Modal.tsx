@@ -54,10 +54,10 @@ const Modal = forwardRef<ModalRef, Props>(
                 resizable={false}
                 pt={{
                     root: {
-                        className: `bg-slate-800 border border-slate-700 text-slate-400 rounded font-inter text-[14px] max-w-[90vw] ${sizeMap[size]}`,
+                        className: `bg-slate-900 border border-slate-800 text-slate-400 rounded font-inter text-[14px] max-w-[90vw] ${sizeMap[size]}`,
                     },
                     header: {
-                        className: 'pt-3 px-3 font-medium',
+                        className: 'pt-3 px-4 font-medium',
                     },
                     headerTitle: {
                         className: 'text-base',

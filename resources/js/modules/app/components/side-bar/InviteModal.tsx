@@ -1,16 +1,18 @@
+import { Button } from '@/components/button'
+import { TextInput } from '@/components/form-input'
 import { Modal, ModalRef } from '@/components/modal'
 import { Form, Formik, FormikProps } from 'formik'
 import { forwardRef, useImperativeHandle, useRef } from 'react'
-import { number, object, string } from 'yup'
+import { object, string } from 'yup'
 
 const initialValues = {
-    communityPostId: 0,
-    reason: '',
+    name: '',
+    email: '',
 }
 
 const validationSchema = object().shape({
-    communityPostId: number().required().label('Post'),
-    reason: string().required().label('Reason'),
+    name: string().required().label('Name'),
+    email: string().email().required().label('Email'),
 })
 
 const InviteModal = forwardRef<any>((props, ref) => {
@@ -18,7 +20,7 @@ const InviteModal = forwardRef<any>((props, ref) => {
     const modalRef = useRef<ModalRef>(null)
 
     useImperativeHandle(ref, () => ({
-        open: (data = null) => {
+        open: () => {
             modalRef.current?.open()
         },
         close: () => {},
@@ -41,7 +43,15 @@ const InviteModal = forwardRef<any>((props, ref) => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                <Form>sdfsd</Form>
+                <Form className='p-4'>
+                    <TextInput name='name' label='Name' placeholder='Enter name' />
+                    <TextInput name='email' label='Email' placeholder='Enter email' />
+                    <div className='mt-4'>
+                        <Button type='submit' className=''>
+                            Invite
+                        </Button>
+                    </div>
+                </Form>
             </Formik>
         </Modal>
     )
