@@ -57,7 +57,23 @@ const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoi
                 }
             },
         }),
+        me: builder.query<Response<null>, void>({
+            query: () => ({
+                url: '/auth/me',
+                method: 'GET',
+            }),
+            providesTags: ['Auth'],
+            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+                try {
+                    queryFulfilled.then(({ data }) => {
+                        dispatch(setUser(data.data))
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useLazyMeQuery } = authApi

@@ -19,7 +19,7 @@ Route::group([
     'prefix' => 'auth',
 ], function () {
     Route::post('logout', [AuthController::class, 'logout']);
-    // Route::get('me', [LoginController::class, 'me']);
+    Route::get('me', [AuthController ::class, 'me']);
     // Route::post('refresh', [LoginController::class, 'refresh']);
 });
 

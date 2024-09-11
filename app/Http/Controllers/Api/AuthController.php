@@ -99,4 +99,9 @@ class AuthController extends Controller
 
         return response()->success('Logged out successfully');
     }
+
+    public function me(Request $request)
+    {
+        return response()->success($request->user());
+    }
 }

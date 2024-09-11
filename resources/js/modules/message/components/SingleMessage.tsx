@@ -15,14 +15,16 @@ interface SingleMessageProps {
 
 const SingleMessage: FC<SingleMessageProps> = ({ message }) => {
     return (
-        <div key={message.id}>
-            <div>
-                <img src={message.user.avatar} alt={message.user.name} />
-                <span>{message.user.name}</span>
+        <div className='py-4 px-6 flex gap-2' key={message.id}>
+            <div className='w-[30px] h-[30px] rounded-lg bg-white/30 flex items-center justify-center'>
+                {message.user.name[0]}
             </div>
             <div>
+                <div className='flex gap-3 mb-2 leading-[1]'>
+                    <span className='font-semibold'>{message.user.name}</span>
+                    <span>{message.createdAt}</span>
+                </div>
                 <p>{message.message}</p>
-                <span>{message.createdAt}</span>
             </div>
         </div>
     )

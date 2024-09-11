@@ -1,17 +1,17 @@
-import {FC} from 'react'
+import { FC } from 'react'
 
 interface SpinnerProps {
     className?: string
-    size?: 'small' | 'medium' | 'large' | 'xlarge'
+    size?: 'small' | 'medium' | 'large' | 'xLarge'
     color?: string
 }
 
-const Spinner: FC<SpinnerProps> = ({className = '', size = 'medium', color = 'white'}) => {
+const Spinner: FC<SpinnerProps> = ({ className = '', size = 'medium', color = 'white' }) => {
     const sizeClass = {
         small: 'w-[10px] h-[10px]',
         medium: 'w-[16px] h-[16px]',
         large: 'w-[22px] h-[22px]',
-        xlarge: 'w-[30px] h-[30px]',
+        xLarge: 'w-[30px] h-[30px]',
     }[size]
 
     return (

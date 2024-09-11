@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import ChannelBar from '../components/ChannelBar'
+import MessageInput from '../components/MessageInput'
 import SingleMessage from '../components/SingleMessage'
 
 const messages = [
@@ -32,20 +34,20 @@ const messages = [
         message: 'That is great to hear.',
         createdAt: '2021-09-01 12:02:00',
     },
-]
+].reverse()
 
-const Messages: FC = () => {
+const ChannelMessages: FC = () => {
     return (
         <div className='h-screen flex flex-col'>
-            <div className='head'>head</div>
-            <div className='grow overflow-y-auto scrollbar flex flex-col-reverse'>
+            <ChannelBar />
+            <div className='h-[calc(100vh-124px)] grow overflow-y-auto scrollbar flex flex-col-reverse'>
                 {messages.map((message) => (
                     <SingleMessage key={message.id} message={message} />
                 ))}
             </div>
-            <div>input</div>
+            <MessageInput />
         </div>
     )
 }
 
-export default Messages
+export default ChannelMessages

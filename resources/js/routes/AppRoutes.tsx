@@ -1,6 +1,7 @@
 import { AppRoutesEnum } from '@/enums/routeEnums'
 import DashboardLayout from '@/modules/app/components/DashboardLayout'
-import Messages from '@/modules/message/page/Messages'
+import ChannelMessages from '@/modules/message/page/ChannelMessages'
+import DirectMessages from '@/modules/message/page/DirectMessages'
 import { RouteObject } from 'react-router-dom'
 
 const appRoutes: RouteObject[] = [
@@ -13,11 +14,11 @@ const appRoutes: RouteObject[] = [
             },
             {
                 path: AppRoutesEnum.CHANNEL_MESSAGES,
-                element: <>Channel Messages</>,
+                element: <ChannelMessages />,
             },
             {
                 path: AppRoutesEnum.DIRECT_MESSAGES,
-                element: <Messages />,
+                element: <DirectMessages />,
             },
         ],
     },
