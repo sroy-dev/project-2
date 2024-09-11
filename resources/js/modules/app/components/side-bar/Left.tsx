@@ -8,6 +8,13 @@ const LeftBar: FC = () => {
             <button className='h-[36px] w-full flex items-center justify-center bg-slate-50/10 rounded-md'>
                 <GoHome />
             </button>
+            <div className='mt-auto'>
+                <button>
+                    <div className='w-[34px] h-[34px] rounded-lg bg-white/30 flex items-center justify-center'>
+                        J
+                    </div>
+                </button>
+            </div>
         </div>
     )
 }

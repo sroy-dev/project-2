@@ -1,6 +1,6 @@
 import { Response } from '@/types/response'
 import { baseApi } from '.'
-import { setToken, setUser } from '../slices/authSlice'
+import { removeToken, removeUser, setToken, setUser } from '../slices/authSlice'
 
 const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoints({
     endpoints: (builder) => ({
@@ -49,8 +49,8 @@ const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['Auth'] }).injectEndpoi
             onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
                 try {
                     queryFulfilled.then(() => {
-                        dispatch(setUser(null))
-                        dispatch(setToken(null))
+                        dispatch(removeUser())
+                        dispatch(removeToken())
                     })
                 } catch (error) {
                     console.log(error)
