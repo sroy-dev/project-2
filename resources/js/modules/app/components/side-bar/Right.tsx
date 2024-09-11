@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { GoGear, GoPencil, GoPlusCircle } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom'
+import InviteButton from './InviteButton'
 
 const channels = ['General', 'Random', 'Development', 'Design', 'Marketing']
 const members = [
@@ -24,7 +25,7 @@ const RightBar: FC = () => {
     }
 
     return (
-        <div className='grow'>
+        <div className='grow flex flex-col'>
             <div className='flex gap-2 justify-between px-4 py-4'>
                 <div className=''>Team Sync</div>
                 <button>
@@ -91,6 +92,9 @@ const RightBar: FC = () => {
                         </div>
                     ))
                 }
+            </div>
+            <div className='p-4 mt-auto flex justify-center'>
+                <InviteButton />
             </div>
         </div>
     )

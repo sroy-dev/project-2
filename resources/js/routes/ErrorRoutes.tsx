@@ -1,10 +1,10 @@
-import {ErrorRoutesEnum} from '@/enums/routeEnums'
-import {Navigate, RouteObject} from 'react-router-dom'
+import { ErrorRoutesEnum } from '@/enums/routeEnums'
+import { Navigate, RouteObject } from 'react-router-dom'
 
 const errorRoutes: RouteObject[] = [
     {
         path: ErrorRoutesEnum.NOT_FOUND,
-        element: <>404</>,
+        element: <div className='h-screen flex items-center justify-center text-4xl'>404</div>,
     },
     {
         path: '/*',

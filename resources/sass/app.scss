@@ -14,21 +14,21 @@
     }
 
     /* style scrollbar */
-    .thin-scrollbar::-webkit-scrollbar {
-        width: 4px;
+    .scrollbar::-webkit-scrollbar {
+        width: 10px;
     }
-    .thin-scrollbar::-webkit-scrollbar-track {
+    .scrollbar::-webkit-scrollbar-track {
         background: transparent;
     }
-    .thin-scrollbar::-webkit-scrollbar-thumb {
-        background: #eaeaee;
-        // border: 2px solid #fff;
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #37374d;
+        border: 2px solid #1d1d2b;
         @apply rounded-full;
     }
-    .thin-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #d9d9df;
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #48485f;
     }
-    .thin-scrollbar::-webkit-scrollbar-thumb:active {
-        background: #d5d5db;
+    .scrollbar::-webkit-scrollbar-thumb:active {
+        background: #48485f;
     }
 }

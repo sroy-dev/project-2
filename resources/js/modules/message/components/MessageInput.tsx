@@ -1,5 +1,5 @@
-import { Form, Formik } from 'formik'
-import { FC } from 'react'
+import { Form, Formik, FormikProps } from 'formik'
+import { FC, useRef } from 'react'
 import { GoPaperAirplane } from 'react-icons/go'
 
 interface MessageInputProps {
@@ -12,14 +12,14 @@ const initialValues = {
 }
 
 const MessageInput: FC<MessageInputProps> = ({ onChange, onEnter }) => {
-    // const [message, setMessage] = useState('')
-    // const { sendMessage } = useMessage()
+    const formikRef = useRef<FormikProps<typeof initialValues>>(null)
 
     const handleOnEnter = async (values: typeof initialValues) => {
         if (values.message.trim() === '') return
 
         // await sendMessage(values.message)
         if (onEnter) onEnter(values.message)
+        formikRef.current?.resetForm()
     }
 
     return (
@@ -28,6 +28,7 @@ const MessageInput: FC<MessageInputProps> = ({ onChange, onEnter }) => {
                 initialValues={initialValues}
                 className='flex items-center h-full'
                 onSubmit={handleOnEnter}
+                innerRef={formikRef}
             >
                 {({ values, handleChange, getFieldProps }) => (
                     <Form className='flex items-stretch'>

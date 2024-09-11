@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import ChannelBar from '../components/ChannelBar'
 import MessageInput from '../components/MessageInput'
 import SingleMessage from '../components/SingleMessage'
 
-const messages = [
+const msg = [
     {
         id: 1,
         user: {
@@ -37,6 +37,8 @@ const messages = [
 ].reverse()
 
 const ChannelMessages: FC = () => {
+    const [messages, setMessages] = useState(msg)
+
     return (
         <div className='h-screen flex flex-col'>
             <ChannelBar />
@@ -45,7 +47,23 @@ const ChannelMessages: FC = () => {
                     <SingleMessage key={message.id} message={message} />
                 ))}
             </div>
-            <MessageInput />
+            <MessageInput
+                onEnter={(message) => {
+                    setMessages([
+                        {
+                            id: messages.length + 1,
+                            user: {
+                                id: 1,
+                                name: 'John Doe',
+                                avatar: 'https://randomuser.me/api/portraits',
+                            },
+                            message,
+                            createdAt: new Date().toISOString(),
+                        },
+                        ...messages,
+                    ])
+                }}
+            />
         </div>
     )
 }
