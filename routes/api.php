@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\TeamController;
 use App\Http\Middleware\ForcefullyChangeAcceptHeader;
 
 
@@ -25,11 +26,9 @@ Route::group([
 
 Route::group([
     'middleware' => 'auth:sanctum',
-    'prefix' => 'connection',
 ], function () {
-    // Route::get('list', [ConnectionController::class, 'list']);
-    // Route::post('create', [ConnectionController::class, 'create']);
-    // ROute::get('{connection_id}/messages', [ConnectionController::class, 'messages']);
-    // Route::post('{connection_id}/messages', [ConnectionController::class, 'sendMessage']);
+    // members route
+    Route::get('team-members', [TeamController::class, 'index']);
+    Route::post('team-members', [TeamController::class, 'store']);
 });
 

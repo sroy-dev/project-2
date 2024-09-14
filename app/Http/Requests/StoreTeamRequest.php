@@ -11,7 +11,8 @@ class StoreTeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // check if the user is authorized to make this request
+        return auth()->check() && auth()->user()->user_type === 'owner';
     }
 
     /**
@@ -22,7 +23,10 @@ class StoreTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string'],
+            'confirm_password' => ['required', 'string'],
         ];
     }
 }

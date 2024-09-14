@@ -1,16 +1,25 @@
 import { AuthEnum } from '@/enums/authEnums'
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState: any = {
+    user: null,
+    team: null,
+    members: [],
+    token: null,
+}
+
 const authSlice = createSlice({
     name: 'auth',
-    initialState: {
-        user: null,
-        token: null,
-    },
+    initialState,
     reducers: {
         setUser: (state, action) => {
-            state.user = action.payload
-            localStorage.setItem(AuthEnum.LOCAL_STORAGE_USER_KEY, JSON.stringify(action.payload))
+            state.user = {
+                id: action.payload.id,
+                name: action.payload.name,
+                email: action.payload.email,
+            }
+            state.team = action.payload.team
+            state.members = action.payload.team_members
         },
         setToken: (state, action) => {
             state.token = action.payload
@@ -22,10 +31,12 @@ const authSlice = createSlice({
         },
         removeUser: (state) => {
             state.user = null
-            localStorage.removeItem(AuthEnum.LOCAL_STORAGE_USER_KEY)
+        },
+        addMember: (state, action) => {
+            state.members.unshift(action.payload)
         },
     },
 })
 
-export const { setUser, setToken, removeToken, removeUser } = authSlice.actions
+export const { setUser, setToken, removeToken, removeUser, addMember } = authSlice.actions
 export default authSlice.reducer

@@ -17,7 +17,6 @@ const BaseApp: FC = () => {
     const [autoLogin, { isLoading }] = useLazyMeQuery()
 
     const localAccessToken = localStorage.getItem(AuthEnum.LOCAL_STORAGE_TOKEN_KEY)
-    const localUser = localStorage.getItem(AuthEnum.LOCAL_STORAGE_USER_KEY)
     useEffect(() => {
         if (localAccessToken) {
             autoLogin()
@@ -41,7 +40,7 @@ const BaseApp: FC = () => {
     }, [])
 
     useEffect(() => {
-        if (!user && !localAccessToken && !localUser) {
+        if (!user && !localAccessToken) {
             navigate(AuthRoutesEnum.LOGIN)
         }
     }, [user])

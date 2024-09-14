@@ -92,7 +92,6 @@ class AuthController extends Controller
         ]);
     }
 
-
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -102,6 +101,10 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return response()->success($request->user());
+        $user = $request->user();
+        // add members array with $user->team_members except the current user
+        $user->team_members = $user->team->users->sortBy([['id','desc']])->where('id', '!=', $user->id)->values();
+        // dd($user->team_members);
+        return response()->success($user);
     }
 }

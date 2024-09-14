@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // get all team members
+        $team_id = $request->user()->team_id;
+        $members = User::where('team_id', $team_id)->get();
+        return response()->success($members);
     }
 
     /**
@@ -29,7 +34,16 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        //
+        // create a new team member
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'team_id' => $request->user()->team_id,
+            'password' => bcrypt($request->password)
+        ]);
+
+        return response()->success($user);
+
     }
 
     /**
