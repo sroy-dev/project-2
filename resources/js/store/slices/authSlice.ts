@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState: any = {
     user: null,
     team: null,
+    channels: [],
     members: [],
     token: null,
 }
@@ -20,6 +21,7 @@ const authSlice = createSlice({
             }
             state.team = action.payload.team
             state.members = action.payload.team_members
+            state.channels = action.payload.channels || []
         },
         setToken: (state, action) => {
             state.token = action.payload
@@ -35,8 +37,12 @@ const authSlice = createSlice({
         addMember: (state, action) => {
             state.members.unshift(action.payload)
         },
+        addChannel: (state, action) => {
+            state.channels.unshift(action.payload)
+        },
     },
 })
 
-export const { setUser, setToken, removeToken, removeUser, addMember } = authSlice.actions
+export const { setUser, setToken, removeToken, removeUser, addMember, addChannel } =
+    authSlice.actions
 export default authSlice.reducer

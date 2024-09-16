@@ -102,9 +102,8 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = $request->user();
-        // add members array with $user->team_members except the current user
         $user->team_members = $user->team->users->sortBy([['id','desc']])->where('id', '!=', $user->id)->values();
-        // dd($user->team_members);
+        $user->channels = $user->team->channels;
         return response()->success($user);
     }
 }

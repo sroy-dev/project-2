@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\TeamController;
 use App\Http\Middleware\ForcefullyChangeAcceptHeader;
 
@@ -28,7 +29,9 @@ Route::group([
     'middleware' => 'auth:sanctum',
 ], function () {
     // members route
-    Route::get('team-members', [TeamController::class, 'index']);
     Route::post('team-members', [TeamController::class, 'store']);
+
+    // channel route
+    Route::post('channels', [ChannelController::class, 'store']);
 });
 

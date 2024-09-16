@@ -2,18 +2,16 @@ import { FC } from 'react'
 import { GoGear, GoPencil, GoPlusCircle } from 'react-icons/go'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import ChannelList from './ChannelList'
 import InviteButton from './InviteButton'
 
 const channels = ['General', 'Random', 'Development', 'Design', 'Marketing']
 
 const RightBar: FC = () => {
-    const { user, members, team } = useSelector((state: any) => state.auth)
+    const { user, members, team, channels } = useSelector((state: any) => state.auth)
 
     const navigate = useNavigate()
 
-    const handleChannelClick = (channelId: string) => {
-        navigate(`/channel/${channelId}`)
-    }
     const handleDirectMessageClick = (userId: string) => {
         navigate(`/direct/${userId}`)
     }
@@ -41,27 +39,9 @@ const RightBar: FC = () => {
                 </button>
             </div>
 
-            <div className='mb-7'>
-                <div className='flex justify-between px-4 mb-3'>
-                    <div className='text-sm font-semibold text-slate-600'>Channels</div>
-                    <button>
-                        <GoPlusCircle />
-                    </button>
-                </div>
-                {
-                    // channels
-                    channels.map((channel, i) => (
-                        <div
-                            key={i}
-                            className='flex justify-between px-4 py-2 hover:bg-slate-700/10 text-slate-400 cursor-pointer'
-                            onClick={() => handleChannelClick(channel)}
-                        >
-                            <div className='text-sm'># {channel}</div>
-                            {/* <div className='text-xs text-slate-400'>(10)</div> */}
-                        </div>
-                    ))
-                }
-            </div>
+            <ChannelList channels={channels} />
+
+            
             <div>
                 <div className='flex justify-between px-4 mb-3'>
                     <div className='text-sm font-semibold text-slate-600'>Direct Messages</div>

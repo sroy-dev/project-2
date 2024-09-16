@@ -42,7 +42,7 @@ class TeamController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        return response()->success($user);
+        return response()->success($user, 201);
 
     }
 

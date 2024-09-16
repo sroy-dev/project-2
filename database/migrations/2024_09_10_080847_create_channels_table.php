@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->string('channel_name');
+            $table->string('name');
             $table->foreignId('team_id')->constrained('teams')->onDelete('cascade');
             $table->timestamps();
         });

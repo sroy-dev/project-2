@@ -29,7 +29,12 @@ class ChannelController extends Controller
      */
     public function store(StoreChannelRequest $request)
     {
-        //
+        $channel = Channel::create([
+            'channel_name' => $request->name,
+            'team_id' => auth()->user()->team_id,
+        ]);
+
+        return response()->success($channel, 201);
     }
 
     /**

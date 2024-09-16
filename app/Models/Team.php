@@ -14,4 +14,9 @@ class Team extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
+    }
 }
