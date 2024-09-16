@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\TeamController;
 use App\Http\Middleware\ForcefullyChangeAcceptHeader;
 
@@ -33,5 +34,9 @@ Route::group([
 
     // channel route
     Route::post('channels', [ChannelController::class, 'store']);
+
+    // get direct messages
+    Route::get('direct-messages/{id}', [ConversationController::class, 'index']);
+    Route::post('direct-messages/{id}', [ConversationController::class, 'store']);
 });
 

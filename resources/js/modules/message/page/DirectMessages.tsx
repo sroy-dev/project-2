@@ -1,121 +1,73 @@
-import { FC } from 'react'
+import { ErrorRoutesEnum } from '@/enums/routeEnums'
+import { BaseState } from '@/store'
+import { useLazyGetMessagesQuery, useSendMessageMutation } from '@/store/apis/conversationApi'
+import { FC, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Navigate, useParams } from 'react-router-dom'
 import MessageInput from '../components/MessageInput'
 import SingleMessage from '../components/SingleMessage'
 import UserBar from '../components/UserBar'
 
-const messages = [
-    {
-        id: 1,
-        user: {
-            id: 1,
-            name: 'John Doe',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'Hello, how are you?',
-        createdAt: '2021-09-01 12:00:00',
-    },
-    {
-        id: 2,
-        user: {
-            id: 2,
-            name: 'Jane Doe',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'I am fine, thank you.',
-        createdAt: '2021-09-01 12:01:00',
-    },
-    {
-        id: 3,
-        user: {
-            id: 1,
-            name: 'John Doe',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'That is great to hear.',
-        createdAt: '2021-09-01 12:02:00',
-    },
-    {
-        id: 4,
-        user: {
-            id: 2,
-            name: 'Jane Doe',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'Yes, it is.',
-        createdAt: '2021-09-01 12:03:00',
-    },
-    {
-        id: 5,
-        user: {
-            id: 1,
-            name: 'John Doe',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'I have to go now.',
-        createdAt: '2021-09-01 12:04:00',
-    },
-    {
-        id: 6,
-        user: {
-            id: 3,
-            name: 'John Smith',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'Hello, how are you?',
-        createdAt: '2021-09-01 12:05:00',
-    },
-    {
-        id: 7,
-        user: {
-            id: 4,
-            name: 'Jane Smith',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'I am fine, thank you.',
-        createdAt: '2021-09-01 12:06:00',
-    },
-    {
-        id: 8,
-        user: {
-            id: 3,
-            name: 'John Smith',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'That is great to hear.',
-        createdAt: '2021-09-01 12:07:00',
-    },
-    {
-        id: 9,
-        user: {
-            id: 4,
-            name: 'Jane Smith',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'Yes, it is.',
-        createdAt: '2021-09-01 12:08:00',
-    },
-    {
-        id: 10,
-        user: {
-            id: 3,
-            name: 'John Smith',
-            avatar: 'https://randomuser.me/api/portraits',
-        },
-        message: 'I have to go now.',
-        createdAt: '2021-09-01 12:09:00',
-    },
-].reverse()
-
 const DirectMessages: FC = () => {
+    const [page, setPage] = useState(1)
+    const [messages, setMessages] = useState<any>([])
+    const { members } = useSelector((state: BaseState) => state.auth)
+    const { userId } = useParams()
+
+    const [sendMessage] = useSendMessageMutation()
+    const [getMessages] = useLazyGetMessagesQuery()
+
+    const user = members.find((member: any) => member.id === Number(userId))
+    if (!user) return <Navigate to={ErrorRoutesEnum.NOT_FOUND} />
+
+    const handleSendMessage = async (message: string) => {
+        sendMessage({ id: user.id, body: { message: message } })
+            .unwrap()
+            .then((data) => {
+                setMessages([data.data, ...messages])
+            })
+    }
+
+    const fetchMessages = () => {
+        getMessages(userId)
+            .unwrap()
+            .then((data) => {
+                console.log('Messages fetched', data)
+                setMessages(data.data.data)
+            })
+            .catch((error) => {
+                if (error.status === 404) {
+                    console.log('No messages found')
+                    setMessages([])
+                }
+            })
+    }
+
+    useEffect(() => {
+        fetchMessages()
+    }, [userId])
+
+    const handleScroll = (e: any) => {
+        console.log('Scrolling')
+        const { scrollTop, clientHeight, scrollHeight } = e.target
+        if (scrollTop === 0) {
+            console.log('Load More')
+            setPage(page + 1)
+        }
+    }
+
     return (
         <div className='h-screen flex flex-col'>
-            <UserBar />
-            <div className='h-[calc(100vh-124px)] grow overflow-y-auto scrollbar flex flex-col-reverse'>
-                {messages.map((message) => (
+            <UserBar user={user} />
+            <div
+                className='h-[calc(100vh-124px)] grow overflow-y-auto scrollbar flex flex-col-reverse'
+                // onScroll={handleScroll}
+            >
+                {messages.map((message: any) => (
                     <SingleMessage key={message.id} message={message} />
                 ))}
             </div>
-            <MessageInput />
+            <MessageInput onEnter={handleSendMessage} />
         </div>
     )
 }
