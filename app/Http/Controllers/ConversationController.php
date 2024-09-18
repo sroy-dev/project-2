@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DirectMessageSent;
 use App\Models\Conversation;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
@@ -69,6 +70,8 @@ class ConversationController extends Controller
         ]);
 
         $message->load('user');
+
+        broadcast(new DirectMessageSent($message, auth()->user()))->toOthers();
 
         return response()->success($message, 201);
     }

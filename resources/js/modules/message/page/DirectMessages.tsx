@@ -32,12 +32,12 @@ const DirectMessages: FC = () => {
         getMessages(userId)
             .unwrap()
             .then((data) => {
-                console.log('Messages fetched', data)
+                // console.log('Messages fetched', data)
                 setMessages(data.data.data)
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    console.log('No messages found')
+                    // console.log('No messages found')
                     setMessages([])
                 }
             })
@@ -55,6 +55,33 @@ const DirectMessages: FC = () => {
             setPage(page + 1)
         }
     }
+
+    useEffect(() => {
+        window.Echo.channel('chat')
+            .listen('DirectMessageSent', (e: any) => {
+                console.log('direct-message-sent', e)
+
+                // const selectedConnection: any =
+                //     { ...store.state.connection.selectedConnection } || null;
+
+                // if (selectedConnection) {
+                //     if (message.sender_id == selectedConnection.connected_user_id) {
+                //         messages.value.unshift(message);
+                //         messageContainer.value.scrollTop =
+                //             messageContainer.value.scrollHeight;
+                //     } else {
+                //         console.log("another user sent message");
+                //     }
+                // }
+            })
+            .error((error: any) => {
+                console.error('Error subscribing to channel:', error) // Log any errors
+            })
+
+        return () => {
+            window.Echo.leave('chat')
+        }
+    }, [])
 
     return (
         <div className='h-screen flex flex-col'>

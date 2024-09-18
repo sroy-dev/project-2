@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Toaster } from 'sonner'
 
+import './echo'
+
 ReactDOM.createRoot(document.getElementById('app')!).render(
     <React.StrictMode>
         <Provider store={store}>

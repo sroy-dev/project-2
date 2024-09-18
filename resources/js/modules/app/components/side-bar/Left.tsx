@@ -1,9 +1,10 @@
 import { removeToken, removeUser } from '@/store/slices/authSlice'
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { GoHome } from 'react-icons/go'
 import { useDispatch } from 'react-redux'
 
 const LeftBar: FC = () => {
+    const dropdownRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
 
@@ -11,13 +12,27 @@ const LeftBar: FC = () => {
         dispatch(removeUser())
         dispatch(removeToken())
     }
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
     return (
         <div className='border-r border-slate-700/50 w-[70px] flex items-center flex-col p-4 gap-3'>
             <img src='/img/logo-icon.svg' className='bg-slate-200 p-1 rounded-md mb-2' />
             <button className='h-[36px] w-full flex items-center justify-center bg-slate-50/10 rounded-md'>
                 <GoHome />
             </button>
-            <div className='mt-auto relative'>
+            <div className='mt-auto relative' ref={dropdownRef}>
                 <button type='button' onClick={() => setOpen(!open)}>
                     <div className='w-[34px] h-[34px] rounded-lg bg-white/30 flex items-center justify-center'>
                         J
