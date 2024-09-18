@@ -58,23 +58,7 @@ const ChannelMessages: FC = () => {
                     <SingleMessage key={message.id} message={message} />
                 ))}
             </div>
-            <MessageInput
-                onEnter={(message) => {
-                    setMessages([
-                        {
-                            id: messages.length + 1,
-                            user: {
-                                id: 1,
-                                name: 'John Doe',
-                                avatar: 'https://randomuser.me/api/portraits',
-                            },
-                            message,
-                            createdAt: new Date().toISOString(),
-                        },
-                        ...messages,
-                    ])
-                }}
-            />
+            <MessageInput onEnter={handleSendMessage} />
         </div>
     )
 }
