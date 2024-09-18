@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { GoGear, GoPencil } from 'react-icons/go'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import ChannelList from './ChannelList'
@@ -20,9 +19,9 @@ const RightBar: FC = () => {
         <div className='grow flex flex-col'>
             <div className='flex gap-2 justify-between px-4 py-4'>
                 <div className=''>{team?.name}</div>
-                <button>
+                {/* <button>
                     <GoGear />
-                </button>
+                </button> */}
             </div>
             <div className='border-b border-slate-700/50 flex justify-between gap-2 mb-7 pb-3 px-4'>
                 <div className='flex gap-2 items-center min-w-0 grow'>
@@ -34,9 +33,9 @@ const RightBar: FC = () => {
                         <div className='text-xs text-slate-500'>{user?.email}</div>
                     </div>
                 </div>
-                <button className='w-8'>
+                {/* <button className='w-8'>
                     <GoPencil />
-                </button>
+                </button> */}
             </div>
 
             <ChannelList channels={channels} />

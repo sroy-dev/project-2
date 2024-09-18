@@ -10,7 +10,7 @@ const appRoutes: RouteObject[] = [
         children: [
             {
                 path: AppRoutesEnum.DASHBOARD,
-                element: <>Dashboard</>,
+                element: <></>,
             },
             {
                 path: AppRoutesEnum.CHANNEL_MESSAGES,
