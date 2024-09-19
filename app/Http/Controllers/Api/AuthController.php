@@ -49,6 +49,9 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
+            $user->team_members = $user->team->users->sortBy([['id','desc']])->where('id', '!=', $user->id)->values();
+            $user->channels = $user->team->channels;
+
             return response()->success([
                 'token' => $token,
                 'user' => $user
@@ -85,6 +88,9 @@ class AuthController extends Controller
 
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        $user->team_members = $user->team->users->sortBy([['id','desc']])->where('id', '!=', $user->id)->values();
+        $user->channels = $user->team->channels;
 
         return response()->success([
             'token' => $token,
