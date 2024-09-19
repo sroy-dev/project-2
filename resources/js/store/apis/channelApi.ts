@@ -28,7 +28,17 @@ const channelApi = baseApi.enhanceEndpoints({ addTagTypes: ['Channel'] }).inject
             }),
             invalidatesTags: ['Channel'],
         }),
+        getNewChannelMessages: builder.query({
+            query: ({ id, last_message_id }) =>
+                `/channel-messages/${id}/new?last_message_id=${last_message_id}`,
+            providesTags: ['Channel'],
+        }),
     }),
 })
 
-export const { useCreateChannelMutation, useLazyGetChannelMessagesQuery, useSendChannelMessageMutation } = channelApi
+export const {
+    useCreateChannelMutation,
+    useLazyGetChannelMessagesQuery,
+    useSendChannelMessageMutation,
+    useLazyGetNewChannelMessagesQuery,
+} = channelApi

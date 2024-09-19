@@ -71,4 +71,11 @@ class ChannelMessageController extends Controller
     {
         //
     }
+
+    public function new(Request $request, $id)
+    {
+        $channelMessages = ChannelMessage::where('channel_id', $id)->where('id', '>', $request->last_message_id)->with(['user'])->latest()->get();
+        // dd($channelMessages);
+        return response()->success($channelMessages);
+    }
 }

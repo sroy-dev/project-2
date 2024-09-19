@@ -45,5 +45,7 @@ Route::group([
     // get channel messages
     Route::get('channel-messages/{id}', [ChannelMessageController::class, 'index']);
     Route::post('channel-messages/{id}', [ChannelMessageController::class, 'store']);
+
+    Route::get('channel-messages/{id}/new', [ChannelMessageController::class, 'new']);
 });
 
