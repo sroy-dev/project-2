@@ -71,7 +71,7 @@ class ConversationController extends Controller
 
         $message->load('user');
 
-        broadcast(new DirectMessageSent($message, auth()->user()))->toOthers();
+        // broadcast(new DirectMessageSent($message, auth()->user()))->toOthers();
 
         return response()->success($message, 201);
     }
@@ -106,5 +106,26 @@ class ConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         //
+    }
+
+    public function new(Request $request, $id)
+    {
+        $user1 = auth()->user()->id;
+        $user2 = $id;
+        $conversation = Conversation::where(function($query) use ($user1, $user2) {
+            $query->where('user_one_id', $user1)
+                  ->where('user_two_id', $user2);
+        })->orWhere(function($query) use ($user1, $user2) {
+            $query->where('user_one_id', $user2)
+                  ->where('user_two_id', $user1);
+        })->first();
+
+        if (!$conversation) {
+            return response()->error('Conversation not found', 404);
+        }
+
+        $messages = $conversation->messages()->where('id', '>', $request->last_message_id)->with('user')->latest()->get();
+
+        return response()->success($messages);
     }
 }

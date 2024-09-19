@@ -40,6 +40,8 @@ Route::group([
     Route::get('direct-messages/{id}', [ConversationController::class, 'index']);
     Route::post('direct-messages/{id}', [ConversationController::class, 'store']);
 
+    Route::get('direct-messages/{id}/new', [ConversationController::class, 'new']);
+
     // get channel messages
     Route::get('channel-messages/{id}', [ChannelMessageController::class, 'index']);
     Route::post('channel-messages/{id}', [ChannelMessageController::class, 'store']);

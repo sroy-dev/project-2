@@ -1,7 +1,11 @@
 import { ErrorRoutesEnum } from '@/enums/routeEnums'
 import { BaseState } from '@/store'
-import { useLazyGetMessagesQuery, useSendMessageMutation } from '@/store/apis/conversationApi'
-import { FC, useEffect, useState } from 'react'
+import {
+    useLazyGetMessagesQuery,
+    useLazyGetNewMessagesQuery,
+    useSendMessageMutation,
+} from '@/store/apis/conversationApi'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, useParams } from 'react-router-dom'
 import MessageInput from '../components/MessageInput'
@@ -16,6 +20,7 @@ const DirectMessages: FC = () => {
 
     const [sendMessage] = useSendMessageMutation()
     const [getMessages] = useLazyGetMessagesQuery()
+    const [getNewMessages] = useLazyGetNewMessagesQuery()
 
     const user = members.find((member: any) => member.id === Number(userId))
     if (!user) return <Navigate to={ErrorRoutesEnum.NOT_FOUND} />
@@ -56,32 +61,51 @@ const DirectMessages: FC = () => {
         }
     }
 
+    const fetchNewMessages = useCallback(() => {
+        if (!messages.length) return
+        console.log('Fetching new messages')
+        getNewMessages({ id: user.id, last_message_id: messages[0]?.id })
+            .unwrap()
+            .then((data) => {
+                console.log('New Messages fetched', data)
+                setMessages([...data.data, ...messages])
+            })
+    }, [messages, user.id])
+
     useEffect(() => {
-        window.Echo.channel('chat')
-            .listen('DirectMessageSent', (e: any) => {
-                console.log('direct-message-sent', e)
-
-                // const selectedConnection: any =
-                //     { ...store.state.connection.selectedConnection } || null;
-
-                // if (selectedConnection) {
-                //     if (message.sender_id == selectedConnection.connected_user_id) {
-                //         messages.value.unshift(message);
-                //         messageContainer.value.scrollTop =
-                //             messageContainer.value.scrollHeight;
-                //     } else {
-                //         console.log("another user sent message");
-                //     }
-                // }
-            })
-            .error((error: any) => {
-                console.error('Error subscribing to channel:', error) // Log any errors
-            })
+        const interval = setInterval(() => {
+            fetchNewMessages()
+        }, 3000)
 
         return () => {
-            window.Echo.leave('chat')
+            clearInterval(interval)
         }
-    }, [])
+
+        // window.Echo.channel('chat')
+        //     .listen('DirectMessageSent', (e: any) => {
+        //         console.log('direct-message-sent', e)
+
+        //         // const selectedConnection: any =
+        //         //     { ...store.state.connection.selectedConnection } || null;
+
+        //         // if (selectedConnection) {
+        //         //     if (message.sender_id == selectedConnection.connected_user_id) {
+        //         //         messages.value.unshift(message);
+        //         //         messageContainer.value.scrollTop =
+        //         //             messageContainer.value.scrollHeight;
+        //         //     } else {
+        //         //         console.log("another user sent message");
+        //         //     }
+        //         // }
+        //     })
+        //     .error((error: any) => {
+        //         console.error('Error subscribing to channel:', error) // Log any errors
+        //     })
+
+        // return () => {
+        //     window.Echo.leave('chat')
+        // }
+    }, [fetchNewMessages])
 
     return (
         <div className='h-screen flex flex-col'>
