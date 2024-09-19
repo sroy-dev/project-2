@@ -14,7 +14,7 @@ class ChannelMessageController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $channelMessages = ChannelMessage::where('channel_id', $id)->with(['user'])->latest()->paginate(10);
+        $channelMessages = ChannelMessage::where('channel_id', $id)->with(['user'])->latest()->paginate(30);
         return response()->success($channelMessages);
     }
 

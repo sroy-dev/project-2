@@ -30,7 +30,7 @@ class ConversationController extends Controller
         }
 
         // send paginated messages
-        return response()->success($conversation->messages()->with('user')->latest()->paginate(10));
+        return response()->success($conversation->messages()->with('user')->latest()->paginate(30));
 
     }
 
